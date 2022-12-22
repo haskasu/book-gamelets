@@ -2,7 +2,7 @@ import './lib/RectUtils'
 import './lib/PointUtils'
 import { Application, Graphics } from 'pixi.js';
 import './style.css'
-import { TreeGenerator } from './tree-generator/TreeGenerator';
+//import { TreeGenerator } from './tree-generator/TreeGenerator';
 import { SpaceInvadersGame } from './space-invaders/SpaceInvadersGame';
 
 let app = new Application<HTMLCanvasElement>();
