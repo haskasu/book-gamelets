@@ -1,8 +1,11 @@
 import { Application } from "pixi.js";
+import { PlayerCannon } from "./PlayerCannon";
 
 export class SpaceInvadersGame {
 
-	constructor(public app: Application) {
+	cannon: PlayerCannon;
 
+	constructor(public app: Application) {
+		this.cannon = new PlayerCannon(this);
 	}
 }

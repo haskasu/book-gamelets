@@ -14,7 +14,7 @@ let stageSize = {
 };
 // 新增一個繪圖元件來畫舞台的外框
 let stageFrame = new Graphics();
-// app.stage.addChild(stageFrame);
+app.stage.addChild(stageFrame);
 /**
  * 重繪舞台的外框
  */
@@ -75,6 +75,12 @@ setStageSize(640, 480);
 // 監聽視窗的 resize 事件
 // 在發生改變成執行 refreshCanvasAndStage()
 window.addEventListener('resize', refreshCanvasAndStage);
+/**
+ * 設定外框顯示與否的函式
+ */
+export function setStageFrameVisible(visible: boolean) {
+    stageFrame.visible = visible;
+}
 /**
  * 匯出取得舞台尺寸的函式
  */
