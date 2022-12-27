@@ -3,6 +3,7 @@ import { SpaceInvadersGame } from "./SpaceInvadersGame";
 import cannonImage from '../images/cannon.png';
 import { getStageSize } from "../main";
 import { keyboardManager } from "../lib/keyboard/KeyboardManager";
+import { KeyCode } from "../lib/keyboard/KeyCode";
 
 export class PlayerCannon {
     // 砲台的圖
@@ -27,22 +28,49 @@ export class PlayerCannon {
             stageSize.width / 2,
             stageSize.height
         );
-        baseTexture.on('loaded', () => {
-            console.log('width = ' + this.sprite.width);
-            console.log('height = ' + this.sprite.height);
-            this.sprite.pivot.set(
-                this.sprite.width / 2,
-                this.sprite.height
-            );
-        });
-
-        keyboardManager.on('pressed', (event: KeyboardEvent) => {
-            console.log('pressed: ' + event.code + ', '  + event.key);
-        })
-
+        // 依流程調整圖片軸心
+        if (baseTexture.valid) {
+            this.adjustPivot();
+        } else {
+            baseTexture.once('loaded', () => {
+                this.adjustPivot();
+            });
+        }
+        // 開始進行砲台移動
+        game.app.ticker.add(this.moveUpdate, this);
     }
 
     destroy(): void {
         this.sprite.destroy();
+        this.game.app.ticker.remove(this.moveUpdate, this);
+    }
+    /**
+     * 調整圖片的軸心位置(底部/置中)
+     */
+    private adjustPivot() {
+        this.sprite.pivot.set(
+            this.sprite.width / 2,
+            this.sprite.height
+        );
+    }
+    /**
+     * 砲台移動的更新函式
+     * @param dt 經過時間
+     */
+    private moveUpdate(dt: number) {
+        const sprite = this.sprite;
+        let x = sprite.x;
+        let distance = dt * this.moveSpeed;
+
+        if (keyboardManager.isKeyDown(KeyCode.LEFT)) {
+            x -= distance;
+        }
+        if (keyboardManager.isKeyDown(KeyCode.RIGHT)) {
+            x += distance;
+        }
+        // 限制x的範圍
+        x = Math.max(sprite.width / 2, x);
+        x = Math.min(getStageSize().width - sprite.width / 2, x);
+        sprite.x = x;
     }
 }

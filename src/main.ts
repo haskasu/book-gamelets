@@ -4,6 +4,7 @@ import { Application, Graphics } from 'pixi.js';
 import './style.css'
 //import { TreeGenerator } from './tree-generator/TreeGenerator';
 import { SpaceInvadersGame } from './space-invaders/SpaceInvadersGame';
+import { WaitManager } from './lib/WaitManager';
 
 let app = new Application<HTMLCanvasElement>();
 document.body.appendChild(app.view);
@@ -89,6 +90,14 @@ export function getStageSize() {
         width: stageSize.width,
         height: stageSize.height,
     }
+}
+
+let waitManager = new WaitManager(app.ticker);
+/**
+ * 等待函式
+ */
+export function wait(ticks: number) {
+    return waitManager.add(ticks);
 }
 
 // new TreeGenerator(app);
