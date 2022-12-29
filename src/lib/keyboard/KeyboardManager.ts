@@ -27,8 +27,8 @@ export class KeyboardManager extends EventEmitter {
 	private onKeyDown = (event: KeyboardEvent) => {
 		this.emit('keydown', event);
 
-		if (!this.isKeyDown(event.key)) {
-			this.isKeyDownMap[event.key] = true;
+		if (!this.isKeyDown(event.code)) {
+			this.isKeyDownMap[event.code] = true;
 			this.emit('pressed', event);
 		}
 	}
@@ -39,8 +39,8 @@ export class KeyboardManager extends EventEmitter {
 	private onKeyUp = (event: KeyboardEvent) => {
 		this.emit('keyup', event);
 
-		if (this.isKeyDown(event.key)) {
-			this.isKeyDownMap[event.key] = false;
+		if (this.isKeyDown(event.code)) {
+			this.isKeyDownMap[event.code] = false;
 			this.emit('released', event);
 		}
 	}

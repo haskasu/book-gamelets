@@ -1,6 +1,9 @@
 import { BaseTexture, Rectangle, Sprite, Texture } from "pixi.js";
 import { SpaceInvadersGame } from "./SpaceInvadersGame";
 import invadersImage from '../images/invaders.png';
+import { wait } from "../main";
+import { playSound } from "../lib/SoundUtils";
+import invaderKilledSnd from '../sounds/invaderKilled.wav';
 
 export class Invader {
     // 外星人的圖
@@ -17,7 +20,7 @@ export class Invader {
         // 建立材質
         let imageRect = new Rectangle(50 * type, 0, 50, 34);
         let texture = new Texture(baseTexture, imageRect);
-        // 新增精靈圖
+        // 指定精靈圖的材質
         this.sprite.texture = texture;
         // 把精靈圖放到舞台上
         game.app.stage.addChild(this.sprite);
@@ -65,5 +68,16 @@ export class Invader {
     }
     get height(): number {
         return this.sprite.height;
+    }
+    /**
+     * 外星人毀滅時的動畫與程序
+     */
+    async hitAndDead() {
+        playSound(invaderKilledSnd, { volume: 0.2 });
+        // 改變材質在基礎材質上的矩形(最右側的50x34)
+        const texture = this.sprite.texture;
+        texture.frame = new Rectangle(200, 0, 50, 34);
+        await wait(10);
+        this.destroy();
     }
 }
