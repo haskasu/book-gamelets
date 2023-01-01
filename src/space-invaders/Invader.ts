@@ -69,6 +69,16 @@ export class Invader {
     get height(): number {
         return this.sprite.height;
     }
+    get destroyed(): boolean {
+        return this.sprite.destroyed;
+    }
+    /**
+     * 當外星人群體要移動時呼叫的函式
+     */
+    onFlockMove(moveX: number, moveY: number) {
+        this.x += moveX;
+        this.y += moveY;
+    }
     /**
      * 外星人毀滅時的動畫與程序
      */

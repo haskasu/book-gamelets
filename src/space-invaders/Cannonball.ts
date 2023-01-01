@@ -2,6 +2,7 @@ import { BaseTexture, Rectangle, Sprite, Texture } from "pixi.js";
 import { SpaceInvadersGame } from "./SpaceInvadersGame";
 import cannonballsImage from '../images/cannonballs.png';
 import { Invader } from "./Invader";
+import { EarthShield } from "./EarthShield";
 
 export class Cannonball {
 	// 砲彈的圖
@@ -36,6 +37,9 @@ export class Cannonball {
 		this.sprite.destroy();
 		this.game.app.ticker.remove(this.moveUpdate, this);
 	}
+	get destroyed(): boolean {
+		return this.sprite.destroyed;
+	}
 	/**
 	 * 移動更新函式
 	 */
@@ -55,6 +59,15 @@ export class Cannonball {
 				this.game.hitAndRemoveInvader(hitInvader);
 				// 再把自己也清掉
 				this.destroy();
+			} else {
+				// 尋找被撞到的護盾
+				let shield = this.hittestShields();
+				if (shield) {
+					// 讓shield進行被擊中的處理
+					shield.onHit();
+					// 再把自己也清掉
+					this.destroy();
+				}
 			}
 		}
 	}
@@ -66,6 +79,16 @@ export class Cannonball {
 		let bounds = this.sprite.getBounds();
 		return this.game.invaders.find((invader) => {
 			return invader.sprite.getBounds().intersects(bounds);
+		});
+	}
+	/**
+	 * 砲彈的碰撞檢測函式
+	 * 回傳被打到的地球護盾
+	 */
+	hittestShields(): EarthShield | undefined {
+		let bounds = this.sprite.getBounds();
+		return this.game.shields.find((shield) => {
+			return shield.getBounds().intersects(bounds);
 		});
 	}
 }

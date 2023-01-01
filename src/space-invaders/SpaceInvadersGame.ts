@@ -1,4 +1,4 @@
-import { Application } from "pixi.js";
+import { Application, Point } from "pixi.js";
 import { ArrayUtils } from "../lib/ArrayUtils";
 import { getStageSize, wait } from "../main";
 import { Invader } from "./Invader";
@@ -6,42 +6,39 @@ import { PlayerCannon } from "./PlayerCannon";
 import { playSound } from "../lib/SoundUtils";
 import invadersMoveSnd from '../sounds/invadersMove.wav';
 import { InvaderDrop } from "./InvaderDrop";
+import { SpaceInvadersUI } from "./SpaceInvadersUI";
+import { SpaceInvadersGameover } from "./SpaceInvadersGameover";
+import { EarthShield } from "./EarthShield";
+import { InvaderBoss } from "./InvaderBoss";
+
 export class SpaceInvadersGame {
 
 	cannon: PlayerCannon;
 
 	invaders: Invader[] = [];
 
-	invadersMoveInterval = 5;
+	invadersMoveInterval = 20;
 
 	invadersShootInterval = 90;
 
 	destroyed = false;
+	gameover = false;
+	// 遊戲介面
+	ui = new SpaceInvadersUI();
+	// 關卡
+	level = 1;
+
+	shields: EarthShield[] = [];
 
 	constructor(public app: Application) {
 		this.cannon = new PlayerCannon(this);
-		this.createInvadersRow({
-			type: 0, // 外形一
-			x: 120,
-			y: 240,
-			amount: 6,
-		});
-		this.createInvadersRow({
-			type: 1, // 外形二
-			x: 100,
-			y: 200,
-			amount: 6,
-		});
-		this.createInvadersRow({
-			type: 2, // 外形三
-			x: 120,
-			y: 160,
-			amount: 6,
-		});
+		this.startLevel(1);
 		// 大軍齊步走，每幾個tick向右走10個像素
 		this.moveInvadersLoop(10);
 		// 大軍攻擊循環
 		this.invadersShootLoop();
+		// 將UI加到舞台上
+		app.stage.addChild(this.ui);
 	}
 
 	destroy() {
@@ -49,6 +46,10 @@ export class SpaceInvadersGame {
 		this.invaders.forEach((invader) => {
 			invader.destroy();
 		});
+		this.shields.forEach((shield) => {
+			shield.destroy();
+		});
+		this.ui.destroy();
 		this.destroyed = true;
 	}
 
@@ -72,14 +73,13 @@ export class SpaceInvadersGame {
 
 	moveInvaders(moveX: number, moveY: number) {
 		for (let invader of this.invaders) {
-			invader.x += moveX;
-			invader.y += moveY;
+			invader.onFlockMove(moveX, moveY);
 		}
 	}
 
 	async moveInvadersLoop(moveX: number) {
-		if (this.destroyed) {
-			// 若遊戲已毀壞，直接結束這個函式
+		if (this.destroyed || this.gameover) {
+			// 若遊戲已滅，直接結束這個函式
 			return;
 		}
 		const delay = this.invadersMoveInterval;
@@ -94,9 +94,9 @@ export class SpaceInvadersGame {
 				}
 				moveX = -moveX;
 			}
+			playSound(invadersMoveSnd, { volume: 0.2 });
 		}
 		this.moveInvadersLoop(moveX);
-		playSound(invadersMoveSnd, { volume: 0.2 });
 	}
 
 	private invadersNeedToTurn(moveX: number): boolean {
@@ -147,15 +147,25 @@ export class SpaceInvadersGame {
 	 * 移除並毀滅外星人
 	 */
 	async hitAndRemoveInvader(invader: Invader) {
+		// 擊落一隻外星人得10分
+		this.ui.addScore(10);
 		// 把invader從陣列中移除
 		ArrayUtils.removeItem(this.invaders, invader);
 		// 讓 invader 顯示毀滅動畫並自我清除
 		await invader.hitAndDead();
+		// 如果外星人全滅，則進入下一關
+		if (!this.invaders.length) {
+			this.startLevel(this.level + 1);
+		}
 	}
 	/**
 	 * 大軍攻擊循環函式
 	 */
 	async invadersShootLoop() {
+		if (this.destroyed || this.gameover) {
+			// 若遊戲已滅，直接結束這個函式
+			return;
+		}
 		// 等待週期
 		let delay = this.invadersShootInterval;
 		await wait(delay);
@@ -176,7 +186,87 @@ export class SpaceInvadersGame {
 		await this.cannon.hitAndDead();
 		// 多等60個tick(約一秒)
 		await wait(60);
-		// 重建新砲台
-		this.cannon = new PlayerCannon(this);
+		// 檢查目前剩餘生命是否大於0
+		const currLives = this.ui.getLives();
+		if (currLives > 0) {
+			// 重建新砲台
+			this.cannon = new PlayerCannon(this);
+			// 更新剩餘生命數
+			this.ui.setLives(currLives - 1);
+		} else {
+			// 遊戲結束
+			this.gameover = true;
+			let gameOver = new SpaceInvadersGameover(this);
+			this.app.stage.addChild(gameOver);
+		}
+	}
+	/**
+	 *  依關卡建立所有的侵略者
+	 */
+	createInvadersAll(level: number) {
+		this.createInvadersRow({
+			type: 0, // 外形一
+			x: 40,
+			y: 240,
+			amount: Math.min(10, 5 + level),
+		});
+		this.createInvadersRow({
+			type: 1, // 外形二
+			x: 70,
+			y: 200,
+			amount: Math.min(10, 4 + level),
+		});
+		this.createInvadersRow({
+			type: 2, // 外形三
+			x: 100,
+			y: 160,
+			amount: Math.min(10, 3 + level),
+		});
+		let boss = new InvaderBoss(this, 220, 120);
+		this.invaders.push(boss);
+	}
+	/**
+	 * 關卡開始
+	 */
+	async startLevel(level: number) {
+		this.level = level;
+		// 關卡開始動畫
+		await this.ui.showLevel(level)
+		// 重建地球護盾
+		this.resetShields();
+		// 建立侵略者大軍
+		this.createInvadersAll(level);
+		// 設定關卡難度
+		this.invadersMoveInterval = Math.max(10, 21 - level);
+		this.invadersShootInterval = Math.max(30, 91 - level);
+	}
+	private resetShields() {
+		// 將現有的護盾都移除
+		this.shields.forEach((shield) => shield.destroy());
+		this.shields.length = 0;
+		// 定義所有護盾小方塊的位置
+		let positions = [
+			// 左邊護盾
+			new Point(100, 410),
+			new Point(120, 400),
+			new Point(140, 400),
+			new Point(160, 410),
+			// 中間護盾
+			new Point(300, 410),
+			new Point(320, 400),
+			new Point(340, 400),
+			new Point(360, 410),
+			// 右邊護盾
+			new Point(500, 410),
+			new Point(520, 400),
+			new Point(540, 400),
+			new Point(560, 410),
+		];
+		// 建立新護盾
+		for (let pos of positions) {
+			let shield = new EarthShield(this, pos.x, pos.y);
+			this.app.stage.addChild(shield);
+			this.shields.push(shield);
+		}
 	}
 }

@@ -4,3 +4,7 @@ body {
 canvas {
   display: block;
 }
+@font-face {
+  font-family: "SpaceInvadersFont";
+  src: url(./fonts/upheavtt.ttf) format("truetype");
+}

@@ -24,7 +24,7 @@ export class PlayerCannon {
         // 載入圖片
         let baseTexture = BaseTexture.from(cannonImage);
         // 建立材質
-        let texture = new Texture(baseTexture);
+        let texture = Texture.from(baseTexture);
         // 新增精靈圖
         this.sprite.texture = texture;
         // 把精靈圖放到舞台上
@@ -50,7 +50,7 @@ export class PlayerCannon {
     }
 
     destroy(): void {
-        this.sprite.destroy();
+        this.sprite.destroyed || this.sprite.destroy();
         this.stop();
     }
     private stop() {
@@ -90,7 +90,6 @@ export class PlayerCannon {
         let hitInvader = this.hittestInvaders();
         // 如果有找到撞到的外星人
         if (hitInvader) {
-            this.game.hitAndRemoveInvader(hitInvader);
             this.game.hitPlayerCannon();
         }
     }

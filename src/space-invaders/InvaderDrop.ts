@@ -10,7 +10,7 @@ export class InvaderDrop extends Cannonball {
     /**
      * 外星彈的移動函式
      */
-    moveUpdate(dt: number): void {
+    moveUpdate(dt: number) {
         const sprite = this.sprite;
         let speed = 2;
         sprite.y += dt * speed;
@@ -19,16 +19,25 @@ export class InvaderDrop extends Cannonball {
         if (sprite.y > getStageSize().height + sprite.height) {
             this.destroy();
         } else {
-            // 測試有沒有撞到玩家砲台
             const cannon = this.game.cannon;
+            // 砲台沒死才要檢查碰撞
             if (!cannon.dead) {
                 const cannonBounds = cannon.sprite.getBounds();
+                // 測試有沒有撞到玩家砲台
                 if (cannonBounds.intersects(sprite.getBounds())) {
                     // 呼叫game裏處理砲台毀壞的函式
                     this.game.hitPlayerCannon();
                     // 再把自己也清掉
                     this.destroy();
                 }
+            }
+        }
+        // 如果到這裏，sprite還沒被銷毀，代表飛彈還活著
+        if (!this.sprite.destroyed) {
+            let shield = this.hittestShields();
+            if (shield) {
+                shield.onHit();
+                this.destroy();
             }
         }
     }
