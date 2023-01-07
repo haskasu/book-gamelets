@@ -5,11 +5,12 @@ import './style.css'
 import { WaitManager } from './lib/WaitManager';
 //import { TreeGenerator } from './tree-generator/TreeGenerator';
 //import { SpaceInvadersGame } from './space-invaders/SpaceInvadersGame';
-import { MonsterRaidersGame } from './monster-raiders/MonsterRaidersGame';
+//import { MonsterRaidersGame } from './monster-raiders/MonsterRaidersGame';
 import { startMouseTracer } from './lib/PixiMouseUtils';
 import { EventEmitter } from "eventemitter3";
+import { GameLauncher } from './GameLauncher';
 
-let app = new Application<HTMLCanvasElement>({background: 0x0000FF});
+let app = new Application<HTMLCanvasElement>();
 document.body.appendChild(app.view);
 // 使用一般物件來儲存舞台的尺寸
 let stageSize = {
@@ -118,4 +119,6 @@ startMouseTracer(app);
 
 // new TreeGenerator(app);
 // new SpaceInvadersGame(app);
-new MonsterRaidersGame(app);
+// new MonsterRaidersGame(app);
+new GameLauncher(app);
+
