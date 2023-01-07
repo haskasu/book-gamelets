@@ -16,6 +16,7 @@
     "vitest": "^0.25.3"
   },
   "dependencies": {
+    "@pixi/gif": "^2.0.1",
     "@pixi/sound": "^5.0.0",
     "dat.gui": "^0.7.9",
     "pixi.js": "^7.0.4"

@@ -1,18 +1,25 @@
 import './lib/RectUtils'
 import './lib/PointUtils'
-import { Application, Graphics } from 'pixi.js';
+import { Application, Graphics, Rectangle } from 'pixi.js';
 import './style.css'
-//import { TreeGenerator } from './tree-generator/TreeGenerator';
-import { SpaceInvadersGame } from './space-invaders/SpaceInvadersGame';
 import { WaitManager } from './lib/WaitManager';
+//import { TreeGenerator } from './tree-generator/TreeGenerator';
+//import { SpaceInvadersGame } from './space-invaders/SpaceInvadersGame';
+import { MonsterRaidersGame } from './monster-raiders/MonsterRaidersGame';
+import { startMouseTracer } from './lib/PixiMouseUtils';
+import { EventEmitter } from "eventemitter3";
 
-let app = new Application<HTMLCanvasElement>();
+let app = new Application<HTMLCanvasElement>({background: 0x0000FF});
 document.body.appendChild(app.view);
 // 使用一般物件來儲存舞台的尺寸
 let stageSize = {
     width: 0,
     height: 0,
 };
+// 定義並匯出代表全畫面範圍的矩形
+export const FullscreenArea = new Rectangle();
+// 匯出一個事件發報機，當舞台大小改變時，用來發報事件
+export const StageSizeEvents = new EventEmitter();
 // 新增一個繪圖元件來畫舞台的外框
 let stageFrame = new Graphics();
 app.stage.addChild(stageFrame);
@@ -70,6 +77,13 @@ function refreshCanvasAndStage(): void {
         (winSize.width - stageRealSize.width) / 2,
         (winSize.height - stageRealSize.height) / 2,
     );
+    // 計算全畫面矩形的位置與大小
+    FullscreenArea.x = -app.stage.x / scale;
+    FullscreenArea.y = -app.stage.y / scale;
+    FullscreenArea.width = winSize.width / scale;
+    FullscreenArea.height = winSize.height / scale;
+    // 發報舞台改變事件
+    StageSizeEvents.emit('resize');
 }
 // 設定舞台尺寸
 setStageSize(640, 480);
@@ -99,6 +113,9 @@ let waitManager = new WaitManager(app.ticker);
 export function wait(ticks: number) {
     return waitManager.add(ticks);
 }
+/** 啟動滑鼠跟蹤器 */
+startMouseTracer(app);
 
 // new TreeGenerator(app);
-new SpaceInvadersGame(app);
+// new SpaceInvadersGame(app);
+new MonsterRaidersGame(app);
