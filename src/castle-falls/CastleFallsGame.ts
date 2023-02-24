@@ -59,8 +59,9 @@ export class CastleFallsGame extends Container {
         this.start();
     }
     async loadLevel(level: number) {
-        let url = `/castle-falls/level_${level}.json`;
-        url += '?time=' + Date.now();
+        let baseUrl = import.meta.env.BASE_URL;
+        let url = `castle-falls/level_${level}.json`;
+        url = baseUrl + url + '?time=' + Date.now();
         let response = await fetch(url);
         let data = await response.json();
         return data;
