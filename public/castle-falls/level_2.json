@@ -1,0 +1,36 @@
+{
+    "slingshot": {
+        "x": 100,
+        "y": 300,
+        "stiffness": 0.03
+    },
+    "objects": [
+        {
+            "type": "ground",
+            "x": 320,
+            "y": 450,
+            "rect": {
+                "width": 2000,
+                "height": 80
+            }
+        },
+        {
+            "type": "brick",
+            "x": 400,
+            "y": 380,
+            "angleDeg": 90,
+            "rect": {
+                "width": 100,
+                "height": 40
+            }
+        },
+        {
+            "type": "boss",
+            "x": 500,
+            "y": 350,
+            "circle": {
+                "radius": 20
+            }
+        }
+    ]
+}

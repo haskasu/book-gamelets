@@ -3,6 +3,7 @@ body {
 }
 canvas {
   display: block;
+  pointer-events: all;
 }
 @font-face {
   font-family: "SpaceInvadersFont";

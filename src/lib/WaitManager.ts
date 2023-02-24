@@ -1,3 +1,4 @@
+import { update } from "@tweenjs/tween.js";
 import { Ticker } from "pixi.js";
 import { ArrayUtils } from "./ArrayUtils";
 
@@ -48,6 +49,8 @@ export class WaitManager {
                 first.resolve();
             }
         }
+        // 呼叫Tween.js的更新函式
+        update(performance.now());
     }
 
     public add(ticks: number) {

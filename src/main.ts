@@ -9,6 +9,7 @@ import { WaitManager } from './lib/WaitManager';
 import { startMouseTracer } from './lib/PixiMouseUtils';
 import { EventEmitter } from "eventemitter3";
 import { GameLauncher } from './GameLauncher';
+import { Tween } from '@tweenjs/tween.js';
 
 let app = new Application<HTMLCanvasElement>();
 document.body.appendChild(app.view);
@@ -84,7 +85,7 @@ function refreshCanvasAndStage(): void {
     FullscreenArea.width = winSize.width / scale;
     FullscreenArea.height = winSize.height / scale;
     // 發報舞台改變事件
-    StageSizeEvents.emit('resize');
+    StageSizeEvents.emit('resize', stageSize);
 }
 // 設定舞台尺寸
 setStageSize(640, 480);
@@ -113,6 +114,14 @@ let waitManager = new WaitManager(app.ticker);
  */
 export function wait(ticks: number) {
     return waitManager.add(ticks);
+}
+/**
+ * 等待Tween播放完畢
+ */
+export function waitForTween(tween: Tween<any>) {
+    return new Promise<void>((resolve) => {
+        tween.onComplete(resolve);
+    });
 }
 /** 啟動滑鼠跟蹤器 */
 startMouseTracer(app);
