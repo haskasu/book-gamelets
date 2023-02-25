@@ -122,7 +122,7 @@ export class Slingshot {
         // 調整Matter滑鼠的位置 
         let stage = this.game.gameApp.app.stage;
         mouse.offset.x = -stage.x / stage.scale.x;
-        mouse.offset.y = -stage.y;
+        mouse.offset.y = -stage.y / stage.scale.y;
         mouse.scale.x = 1 / stage.scale.x;
         mouse.scale.y = 1 / stage.scale.y;
         // 建立滑鼠約束

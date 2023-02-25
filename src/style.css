@@ -2,8 +2,7 @@ body {
   margin: 0;
 }
 canvas {
-  display: block;
-  pointer-events: all;
+  position: fixed;  
 }
 @font-face {
   font-family: "SpaceInvadersFont";
