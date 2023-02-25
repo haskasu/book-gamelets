@@ -125,6 +125,15 @@ export function waitForTween(tween: Tween<any>) {
 }
 /** 啟動滑鼠跟蹤器 */
 startMouseTracer(app);
+/**
+ * 檢查遊戲是否在觸控螢幕的裝置上運行
+ */
+export function isOnTouch(): boolean {
+    return (
+        ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0)
+    )
+}
 
 // new TreeGenerator(app);
 // new SpaceInvadersGame(app);

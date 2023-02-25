@@ -85,6 +85,10 @@ export class MonsterRaidersUI extends Container {
                 refreshButton();
             }
         });
+        // 手機的觸碰結束事件
+        button.on('touchend', (event) => {
+            button.emit('click', event);
+        });
     }
 
     public setScore(score: number) {

@@ -96,5 +96,9 @@ export class MonsterRaidersGameover extends Container {
         button.on('pointerout', () => {
             bg.tint = 0x283593;
         });
+        // 手機的觸碰結束事件
+        button.on('touchend', (event) => {
+            button.emit('click', event);
+        });
     }
 }

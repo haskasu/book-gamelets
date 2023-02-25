@@ -84,5 +84,9 @@ export class PixiButton extends Container {
             bg.tint = backgroundColor.active;
             label.style.fill = labelColor.active;
         });
+        // 手機的觸碰結束事件
+        this.on('touchend', (event) => {
+            this.emit('click', event);
+        });
     }
 }
