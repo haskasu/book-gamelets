@@ -86,10 +86,10 @@ export class CastleFallsGame extends Container {
     // 等待所有物體都睡著
     async waitWorldPeace() {
         // 尋找一個沒睡著的物體
-        let awake = this.engine.world.bodies.find(body => {
+        let awaked = this.engine.world.bodies.find(body => {
             return !body.isSleeping;
         });
-        if (awake) {
+        if (awaked) {
             // 如果找到了，就先等一個tick，然後再呼叫自己一次
             await wait(1);
             await this.waitWorldPeace();

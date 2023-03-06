@@ -27,7 +27,7 @@ export class Explosion extends Container {
         this.addChild(this.animation);
     }
     /** 播放動畫，並在結束時自我銷毀 */
-    async playAndDestroy(target: SpaceObject) {
+    playAndDestroy(target: SpaceObject) {
         // 加入遊戲容器
         target.game.spaceRoot.addChild(this);
         // 將位置移到發生爆炸的太空物件
@@ -48,8 +48,7 @@ export class Explosion extends Container {
         }
     }
 }
-
-// 爆炸每一幀的長寬尺寸
+// 爆炸動畫中每一幀的長寬尺寸
 const frameSize = {
     width: 128,
     height: 124,

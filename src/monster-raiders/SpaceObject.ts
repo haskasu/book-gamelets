@@ -35,6 +35,7 @@ export abstract class SpaceObject extends Container {
         this.minLifespan -= dt;
         // 如果最低壽命用完了且不在畫面上
         if (this.minLifespan < 0 && !this.isInScreen()) {
+            // 自我銷毀
             this.destroy();
         }
     }

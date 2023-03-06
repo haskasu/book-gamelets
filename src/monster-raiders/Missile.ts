@@ -39,6 +39,7 @@ export class Missile extends SpaceObject {
     update(dt: number) {
         let hitObject = this.hitTestSpaceObject();
         if (hitObject) {
+            // 撞到東西了，準備自爆
             if (hitObject.type == 'monster') {
                 new Explosion().playAndDestroy(hitObject);
                 hitObject.destroy();

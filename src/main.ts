@@ -29,7 +29,7 @@ app.stage.addChild(stageFrame);
  * 重繪舞台的外框
  */
 function redrawStageFrame(): void {
-    stageFrame.clear();
+    stageFrame.clear(); // 清除繪圖器
     stageFrame.lineStyle({
         color: 0xFF0000,
         width: 2,
@@ -128,7 +128,7 @@ startMouseTracer(app);
 /**
  * 檢查遊戲是否在觸控螢幕的裝置上運行
  */
-export function isOnTouch(): boolean {
+export function isOnTouchScreen(): boolean {
     return (
         ('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0)

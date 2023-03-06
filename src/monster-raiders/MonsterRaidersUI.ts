@@ -65,7 +65,7 @@ export class MonsterRaidersUI extends Container {
         button.interactive = true;
         button.cursor = 'pointer';
         this.addChild(button);
-        // 更新繪圖器的函式
+        // 更新按鈕圖案的函式
         let refreshButton = () => {
             let music = this.game.music;
             if (music && music.muted) {

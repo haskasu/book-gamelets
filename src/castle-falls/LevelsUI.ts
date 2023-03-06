@@ -12,8 +12,8 @@ export class LevelsUI extends Container {
         bg.scale.set(0.5);
         this.addChild(bg);
         // 建構選關按鈕
-        const maxLevels = 3;
-        for (let lv = 1; lv <= maxLevels; lv++) {
+        const maxLevel = 3;
+        for (let lv = 1; lv <= maxLevel; lv++) {
             let button = this.createLevelButton(lv);
             if (!gameApp.record.isLevelUnlocked(lv)) {
                 button.interactive = false;

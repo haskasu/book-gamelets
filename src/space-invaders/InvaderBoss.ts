@@ -85,7 +85,7 @@ export class InvaderBoss extends Invader {
         this.y += this.velocity.y * dt;
 
         if (this.y > getStageSize().height + this.height) {
-            // 如果y往下超過畫面下方範圍，則進入「返回」模式
+            // 如果y往下超出畫面下方，則進入「返回」模式
             this.goBack();
         }
     }

@@ -73,7 +73,7 @@ export class SpaceInvadersUI extends Container {
             let sprite = this.liveSprites.pop();
             sprite?.destroy();
         }
-        // 準備好砲台的材質基底
+        // 準備砲台的材質基底備用
         let baseTexture = BaseTexture.from(cannonImage);
         // 補足不夠的砲台生命圖
         while (this.liveSprites.length < this.lives) {
@@ -102,7 +102,7 @@ export class SpaceInvadersUI extends Container {
         await document.fonts.load('10px SpaceInvadersFont');
 
         let levelText = this.levelText;
-        // 如果levelSprite是空的，先新增Text
+        // 如果levelText是空的，先建立Text繪圖器
         if (!levelText) {
             levelText = this.createText('', '#FFFFFF', 250, 10);
             this.addChild(levelText);
@@ -123,7 +123,7 @@ export class SpaceInvadersUI extends Container {
         text.x = (getStageSize().width - text.width) / 2;
         // 等待一秒
         await wait(60);
-        // 移動大字
+        // 銷毀大字
         text.destroy();
     }
 }

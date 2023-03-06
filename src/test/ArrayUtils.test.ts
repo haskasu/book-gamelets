@@ -11,7 +11,7 @@ test('addUniqueItem', () => {
         .toBe(true)
     expect(array.length).toBe(4)
 })
-test('Object array sorting', () => {
+test('物件陣列:依屬性排序', () => {
     let array = [
         {id: 'p1', name: 'Haska', power: 1},
         {id: 'p2', name: 'Anita', power: 99},

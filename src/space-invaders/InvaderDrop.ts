@@ -8,7 +8,7 @@ export class InvaderDrop extends Cannonball {
         return new Rectangle(6, 0, 6, 14);
     }
     /**
-     * 外星彈的移動函式
+     * 外星人飛彈的移動函式
      */
     moveUpdate(dt: number) {
         const sprite = this.sprite;
@@ -27,7 +27,7 @@ export class InvaderDrop extends Cannonball {
                 if (cannonBounds.intersects(sprite.getBounds())) {
                     // 呼叫game裏處理砲台毀壞的函式
                     this.game.hitPlayerCannon();
-                    // 再把自己也清掉
+                    // 再把自己也銷毀
                     this.destroy();
                 }
             }

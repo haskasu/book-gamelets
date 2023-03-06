@@ -33,7 +33,7 @@ export class SpaceInvadersGame {
 	constructor(public app: Application) {
 		this.cannon = new PlayerCannon(this);
 		this.startLevel(1);
-		// 大軍齊步走，每幾個tick向右走10個像素
+		// 大軍齊步走，每隔幾個tick向右移動10個像素
 		this.moveInvadersLoop(10);
 		// 大軍攻擊循環
 		this.invadersShootLoop();
@@ -79,7 +79,7 @@ export class SpaceInvadersGame {
 
 	async moveInvadersLoop(moveX: number) {
 		if (this.destroyed || this.gameover) {
-			// 若遊戲已滅，直接結束這個函式
+			// 直接結束這個函式，不再進入下個循環
 			return;
 		}
 		const delay = this.invadersMoveInterval;
@@ -96,32 +96,33 @@ export class SpaceInvadersGame {
 			}
 			playSound(invadersMoveSnd, { volume: 0.2 });
 		}
+		// 遞迴呼叫
 		this.moveInvadersLoop(moveX);
 	}
 
 	private invadersNeedToTurn(moveX: number): boolean {
 		// 如果目前大軍朝右走
 		if (moveX > 0) {
-			// 找出最靠右的侵略者
+			// 找出最靠右側的侵略者
 			let maxXInvader = this.invaders.reduce(
-				(maxInvader, currInvader) => {
-					if (maxInvader.x > currInvader.x) {
+				(maxInvader, nextInvader) => {
+					if (maxInvader.x > nextInvader.x) {
 						return maxInvader;
 					} else {
-						return currInvader;
+						return nextInvader;
 					}
 				}
 			);
 			// 回傳最右側侵略者的x是不是超出邊界的右邊
 			return maxXInvader.x > getStageSize().width - maxXInvader.width;
 		} else {
-			// 找出最靠左的侵略者
+			// 找出最靠左側的侵略者
 			let minXInvader = this.invaders.reduce(
-				(minInvader, currInvader) => {
-					if (minInvader.x < currInvader.x) {
+				(minInvader, nextInvader) => {
+					if (minInvader.x < nextInvader.x) {
 						return minInvader;
 					} else {
-						return currInvader;
+						return nextInvader;
 					}
 				}
 			);
@@ -132,11 +133,11 @@ export class SpaceInvadersGame {
 	private invadersNeedToGoDown(): boolean {
 		// 找出最靠下方的侵略者
 		let maxYInvader = this.invaders.reduce(
-			(maxInvader, currInvader) => {
-				if (maxInvader.y > currInvader.y) {
+			(maxInvader, nextInvader) => {
+				if (maxInvader.y > nextInvader.y) {
 					return maxInvader;
 				} else {
-					return currInvader;
+					return nextInvader;
 				}
 			}
 		);
@@ -166,7 +167,7 @@ export class SpaceInvadersGame {
 			// 若遊戲已滅，直接結束這個函式
 			return;
 		}
-		// 等待週期
+		// 等待攻擊間隔時間
 		let delay = this.invadersShootInterval;
 		await wait(delay);
 		// 如果還有外星人在飛才要發動攻擊
@@ -189,7 +190,7 @@ export class SpaceInvadersGame {
 		// 檢查目前剩餘生命是否大於0
 		const currLives = this.ui.getLives();
 		if (currLives > 0) {
-			// 重建新砲台
+			// 重建一座新的砲台
 			this.cannon = new PlayerCannon(this);
 			// 更新剩餘生命數
 			this.ui.setLives(currLives - 1);

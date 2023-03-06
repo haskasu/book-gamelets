@@ -10,12 +10,12 @@ export class MatterRender {
         public stage: Container,
         stageSize: { width: number, height: number }
     ) {
+        // 建立Render，設定畫板的css，對齊Pixi，加入時間洪流
         this.render = this.createRender(stageSize);
         this.initRenderView(this.render);
         this.align();
         Render.run(this.render);
     }
-
     destroy() {
         Render.stop(this.render);
         this.render.canvas.remove();

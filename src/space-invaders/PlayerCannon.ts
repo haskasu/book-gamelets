@@ -83,8 +83,10 @@ export class PlayerCannon {
             x += distance;
         }
         // 限制x的範圍
-        x = Math.max(sprite.width / 2, x);
-        x = Math.min(getStageSize().width - sprite.width / 2, x);
+        let minX = sprite.width / 2;
+        let maxX = getStageSize().width - sprite.width / 2;
+        x = Math.max(minX, x);
+        x = Math.min(maxX, x);
         sprite.x = x;
         // 處理砲台和外星人們的碰撞
         let hitInvader = this.hittestInvaders();

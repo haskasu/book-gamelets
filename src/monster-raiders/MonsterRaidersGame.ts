@@ -128,6 +128,7 @@ export class MonsterRaidersGame extends Container {
             return;
         }
         await wait(12);
+        // 隨機選擇畫面外120個像素的一個位置
         let pos = this.randomPositionOnScreenEdge(120);
         // 建立小行星
         let astroid = new Astroid(this, pos.x, pos.y);
@@ -145,6 +146,7 @@ export class MonsterRaidersGame extends Container {
             return;
         }
         await wait(60);
+        // 隨機選擇畫面外40個像素的一個位置
         let pos = this.randomPositionOnScreenEdge(40);
         // 建立怪獸
         let monster = new Monster(this, pos.x, pos.y);

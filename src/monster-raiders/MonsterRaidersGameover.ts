@@ -6,13 +6,17 @@ export class MonsterRaidersGameover extends Container {
 
     constructor(public game: MonsterRaidersGame) {
         super();
+        // 視窗的背景
         this.drawBackground(480, 240);
+        // 寫上遊戲結束的字樣
         this.drawGameoverText(20);
+        // 寫上最後得分
         this.drawScoreText(100);
+        // 加上重玩的按鈕
         this.createRestartButton(160);
         // 把自己加進遊戲容器
         game.addChild(this);
-        // 置中
+        // 視窗置中
         this.position.set(
             (getStageSize().width - this.width) / 2,
             (getStageSize().height - this.height) / 2
@@ -31,7 +35,7 @@ export class MonsterRaidersGameover extends Container {
             fontSize: 64,
             fill: 0x990000,
         });
-        gameoverTxt.resolution = 2
+        gameoverTxt.resolution = 2;
         gameoverTxt.position.set(
             (this.width - gameoverTxt.width) / 2,
             y

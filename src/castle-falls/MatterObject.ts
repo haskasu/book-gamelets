@@ -79,7 +79,10 @@ export class MatterObject extends Container {
     private createSprite(data: ICFObject): Sprite {
         if (data.type == 'ground') {
             const rect = data.rect!;
-            let sprite = TilingSprite.from(groundImg, { width: rect.width, height: rect.height });
+            let sprite = TilingSprite.from(
+                groundImg,
+                { width: rect.width, height: rect.height }
+            );
             sprite.pivot.set(sprite.width / 2, sprite.height / 2);
             sprite.width = rect.width;
             sprite.height = rect.height;
@@ -159,7 +162,7 @@ export class MatterObject extends Container {
         gif.pivot.set(gif.width / 2, gif.height / 2);
         // 將動畫縮小一點
         gif.scale.set(0.6);
-        // 移動至函式參數指定的位置
+        // 移動至參數指定的位置
         gif.position.copyFrom(position);
         // 圖層調高，才不會被其它物件遮住
         gif.zIndex = 10;

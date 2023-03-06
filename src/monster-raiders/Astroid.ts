@@ -9,7 +9,7 @@ export class Astroid extends SpaceObject {
     }
 
     protected init(): void {
-        // 放一張小行星的圖
+        // 放一張小行星的圖，並移動軸心到中心
         let sprite = Sprite.from(astroidImg);
         sprite.pivot.set(130, 120);
         this.addChild(sprite);

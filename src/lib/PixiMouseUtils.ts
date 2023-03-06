@@ -1,7 +1,7 @@
 import { Application, Point, Rectangle } from "pixi.js";
-
+// 滑鼠的全域座標(滑鼠在遊戲畫面上的位置)
 export const mouseGlobal = new Point();
-
+// 啟動追蹤滑鼠座標的程序
 export function startMouseTracer(app: Application) {
     let stage = app.stage;
     // 開啟舞台的互動開關

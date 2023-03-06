@@ -46,7 +46,6 @@ export class Cannonball {
 	moveUpdate(dt: number) {
 		let speed = 4;
 		this.sprite.y -= dt * speed;
-
 		// 往上超出舞台範圍時，刪掉自己
 		if (this.sprite.y < -this.sprite.height) {
 			this.destroy();
@@ -57,7 +56,7 @@ export class Cannonball {
 			if (hitInvader) {
 				// 呼叫game裏處理毀滅外星人的函式
 				this.game.hitAndRemoveInvader(hitInvader);
-				// 再把自己也清掉
+				// 再把自己也銷毀
 				this.destroy();
 			} else {
 				// 尋找被撞到的護盾

@@ -28,7 +28,8 @@ export class SpaceInvadersGameover extends Container {
             0,
             30,
             getStageSize().width,
-            getStageSize().height - 30);
+            getStageSize().height - 30
+        );
         graphics.endFill();
         this.addChild(graphics);
     }
@@ -56,8 +57,8 @@ export class SpaceInvadersGameover extends Container {
         );
         this.addChild(text);
         while (!text.destroyed) {
-            await wait(60);
             text.visible = !text.visible;
+            await wait(60);
         }
     }
     async waitUserPressSpace() {

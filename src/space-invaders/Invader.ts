@@ -84,7 +84,7 @@ export class Invader {
      */
     async hitAndDead() {
         playSound(invaderKilledSnd, { volume: 0.2 });
-        // 改變材質在基礎材質上的矩形(最右側的50x34)
+        // 改變材質在基礎材質上的矩形(換成最右側的50x34)
         const texture = this.sprite.texture;
         texture.frame = new Rectangle(200, 0, 50, 34);
         await wait(10);

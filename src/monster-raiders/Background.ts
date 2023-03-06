@@ -29,11 +29,11 @@ export class Background extends Container {
         );
         this.addChild(this.starsSprite);
         this.starsSprite.tileScale.set(0.8);
-        // 將Background加入遊戲容器
+        // 將Background加入遊戲容器的底層
         game.addChildAt(this, 0);
         // 開始更新循環
         game.app.ticker.add(this.update, this);
-        // 更新背景尺寸
+        // 初次更新背景尺寸
         this.refreshSize();
         // 監聽舞台改變事件，在舞台改變時更新背景尺寸
         StageSizeEvents.on('resize', this.refreshSize, this);

@@ -13,7 +13,7 @@ export class Camera2D {
     height = 0;
     // 攝影機聚焦的物件
     focus?: ICamera2DObject;
-    // 實際被攝影機移動的Pixi容器
+    // 實際會被攝影機移動的Pixi容器
     gameRoot?: Container;
     // 攝影機跟隨聚焦物件的速率
     followFocusRate = 0.2;

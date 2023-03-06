@@ -29,11 +29,11 @@ export class Fighter extends SpaceObject {
         stage.off('pointerdown', this.launchMissile, this);
     }
 
-    // 記錄我們建構的GIF繪圖器
+    // 戰機的GIF繪圖器
     private gif?: AnimatedGIF;
     // 載入GIF並建構GIF繪圖器
     private async loadFighterGIF() {
-        // 取得gif圖片的回應
+        // 建立gif動畫繪圖器
         let gif = await gifFrom(fighterImg, {
             animationSpeed: 0.5,
         });
@@ -49,6 +49,7 @@ export class Fighter extends SpaceObject {
     update(dt: number) {
         let hitObject = this.hitTestSpaceObject();
         if (hitObject) {
+            // 撞到東西了，準備自爆
             new Explosion().playAndDestroy(this);
             this.destroy();
             this.game.gameover();

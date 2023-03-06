@@ -2,7 +2,7 @@ import { GUI } from "dat.gui";
 import { TreeGenerator } from "./TreeGenerator";
 
 export class OptionsEditor {
-
+    // 建立參數面板
     gui = new GUI();
 
     constructor(public generator: TreeGenerator) {

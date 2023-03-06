@@ -6,7 +6,7 @@ export interface ICastleFallsLevelData {
 export interface ICFSlingshot {
 	x: number;
 	y: number;
-	stiffness: number;
+	stiffness: number; // 橡皮筋的剛性程度
 }
 
 export interface ICFObject {
