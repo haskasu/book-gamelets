@@ -127,7 +127,6 @@ export class MonsterRaidersGame extends Container {
             // 如果遊戲已被銷毀，就不要繼續
             return;
         }
-        await wait(12);
         // 隨機選擇畫面外120個像素的一個位置
         let pos = this.randomPositionOnScreenEdge(120);
         // 建立小行星
@@ -136,6 +135,8 @@ export class MonsterRaidersGame extends Container {
         astroid.minLifespan = 120;
         // 放進小行星陣列
         this.objects.push(astroid);
+        // 等待
+        await wait(12);
         // 呼叫自己，準備下一顆小行星的誕生
         this.newAstroidLoop();
     }
@@ -145,13 +146,14 @@ export class MonsterRaidersGame extends Container {
             // 如果遊戲已被銷毀，就不要繼續
             return;
         }
-        await wait(60);
         // 隨機選擇畫面外40個像素的一個位置
         let pos = this.randomPositionOnScreenEdge(40);
         // 建立怪獸
         let monster = new Monster(this, pos.x, pos.y);
         // 放進陣列
         this.objects.push(monster);
+        // 等待一秒
+        await wait(60);
         // 呼叫自己，準備下一隻怪獸的誕生
         this.newMonsterLoop();
     }

@@ -1,7 +1,6 @@
 import { IPoint, ObservablePoint, Point } from 'pixi.js'
 
 declare module "pixi.js" {
-
     interface IPoint {
         /** 計算向量的長度 */
         length(): number

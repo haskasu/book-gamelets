@@ -15,7 +15,7 @@ export class PlayerCannon {
     sprite = new Sprite();
     // 砲台移動速度(像素/tick)
     moveSpeed = 1;
-    // 射擊冷卻時間(毫秒)
+    // 射擊冷卻時間(幀)
     shootCooldown = 0;
     // 是否已被破壞
     dead = false;

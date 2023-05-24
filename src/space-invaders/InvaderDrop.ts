@@ -15,7 +15,7 @@ export class InvaderDrop extends Cannonball {
         let speed = 2;
         sprite.y += dt * speed;
 
-        // 往上超出舞台範圍時，刪掉自己
+        // 往下超出舞台範圍時，刪掉自己
         if (sprite.y > getStageSize().height + sprite.height) {
             this.destroy();
         } else {

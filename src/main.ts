@@ -13,7 +13,7 @@ import { Tween } from '@tweenjs/tween.js';
 
 let app = new Application<HTMLCanvasElement>();
 document.body.appendChild(app.view);
-// 使用一般物件來儲存舞台的尺寸
+// 使用通用物件來儲存舞台的尺寸
 let stageSize = {
     width: 0,
     height: 0,
@@ -90,7 +90,7 @@ function refreshCanvasAndStage(): void {
 // 設定舞台尺寸
 setStageSize(640, 480);
 // 監聽視窗的 resize 事件
-// 在發生改變成執行 refreshCanvasAndStage()
+// 在發生改變時執行 refreshCanvasAndStage()
 window.addEventListener('resize', refreshCanvasAndStage);
 /**
  * 設定外框顯示與否的函式
