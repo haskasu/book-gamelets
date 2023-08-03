@@ -142,7 +142,8 @@ export class SpaceInvadersGame {
 			}
 		);
 		// 回傳最下方侵略者的y是不是超出下方邊界
-		return maxYInvader.y < getStageSize().height - maxYInvader.height;
+		let maxStageEdge = getStageSize().height - maxYInvader.height;
+		return maxYInvader.y < maxStageEdge;
 	}
 	/**
 	 * 移除並毀滅外星人
