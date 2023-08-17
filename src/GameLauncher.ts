@@ -16,7 +16,7 @@ export class GameLauncher extends Container {
         this.createButton('小樹枝上開朵花', 80, () => {
             new TreeGenerator(app);
         });
-        this.createButton('經典小密蜂', 160, () => {
+        this.createButton('經典小蜜蜂', 160, () => {
             new SpaceInvadersGame(app);
         });
         this.createButton('怪獸掃蕩隊', 240, () => {
