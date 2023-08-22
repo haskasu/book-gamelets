@@ -4,7 +4,7 @@ import astroidImg from '../images/astroid.png';
 
 export class Astroid extends SpaceObject {
 
-    get type(): 'astroid' | 'fighter' | 'monster' {
+    get type(): 'astroid' | 'fighter' | 'monster' | 'missile' {
         return 'astroid';
     }
 
@@ -13,19 +13,16 @@ export class Astroid extends SpaceObject {
         let sprite = Sprite.from(astroidImg);
         sprite.pivot.set(130, 120);
         this.addChild(sprite);
-        // 隨機旋轉一個角度，讓每顆小行星看起來不一樣
+        // 隨機旋轉與縮放，讓每顆小行星看起來不一樣
         sprite.rotation = Math.random() * Math.PI * 2;
-        // 隨機縮放比例
         sprite.scale.set(0.3 + Math.random() * 0.5);
         // 隨機指定排序值在2到3之間
         this.zIndex = 2 + Math.random();
-        // 隨機選擇移動速度
+        // 隨機選擇移動速度與方向
         this.velocity.x = Math.random() * 0.3;
-        // 隨機旋轉移動方向
         this.velocity.rotate(Math.random() * Math.PI * 2);
-        // 計算碰撞半徑
+        // 計算碰撞半徑（並畫出碰撞圓）
         this.hitRadius = sprite.scale.x * 110;
-        // 畫出碰撞圓
         // this.drawHitCircle();
     }
     // 小行星自轉速度

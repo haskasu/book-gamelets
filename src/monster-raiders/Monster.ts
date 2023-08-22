@@ -5,7 +5,7 @@ import { MathUtils } from "../lib/MathUtils";
 
 export class Monster extends SpaceObject {
 
-    get type(): 'astroid' | 'fighter' | 'monster' {
+    get type(): 'astroid' | 'fighter' | 'monster' | 'missile' {
         return 'monster';
     }
     // 還要追著玩家跑多久

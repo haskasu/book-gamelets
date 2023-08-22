@@ -10,7 +10,7 @@ import { playSound } from "../lib/SoundUtils";
 
 export class Fighter extends SpaceObject {
 
-    get type(): 'astroid' | 'fighter' | 'monster' {
+    get type(): 'astroid' | 'fighter' | 'monster' | 'missile' {
         return 'fighter';
     }
 
