@@ -141,7 +141,7 @@ export class SpaceInvadersGame {
 				}
 			}
 		);
-		// 回傳最下方侵略者的y是不是超出下方邊界
+		// 回傳最下方侵略者的y是不是還沒超出下方邊界
 		let maxStageEdge = getStageSize().height - maxYInvader.height;
 		return maxYInvader.y < maxStageEdge;
 	}
