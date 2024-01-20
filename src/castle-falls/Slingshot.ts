@@ -36,7 +36,7 @@ export class Slingshot {
             // 改變石頭的類別
             const rock = this.shootData.rock;
             rock.collisionFilter.category = 0b01;
-            // 記錄發射石頭的起始位置(S點)
+            // 記錄發射石頭的出發點(S點)
             this.shootData.releaseStart = Vector.clone(rock.position);
             // 播放發射音效
             playSound(shootSnd);
